@@ -452,3 +452,80 @@ snippet numeric "methods for emulating a numeric type" b
 	def __coerce__(self, other):
 		${25:pass}
 	
+=======
+# parser construct
+snippet parser
+	import argparse
+	import sys
+
+	if __name__ == '__main__':
+		parser = argparse.ArgumentParser(description="${1:description}")
+		parser.add_argument('-${2:option name}', '--$2', help='${3:help text}')
+		args = parser.parse_args(sys.argv[1:])
+
+		if len(sys.argv) < 1:
+			parser.print_help()
+			return
+
+
+snippet header
+	###########################################################################
+	#               			${1:HEADER }                                 #
+	###########################################################################
+
+snippet section
+	# -------- ${1:SECTION } --------
+
+snippet narg
+	parser.add_argument('-${1:option name}', '--$1',
+						default=[],
+						nargs='*',
+						type=str,
+						help='${2:help text}')
+
+snippet iarg
+	parser.add_argument('-${1:option name}', '--$1',
+						type=int, help='${3: ${VISUAL}}',
+						default=0,)
+
+snippet barg
+	parser.add_argument('-${1:option name}', '--$1',
+						action="store_true", help='${3: ${VISUAL}}',
+						default=False,)
+snippet sarg
+	parser.add_argument('-${1:option name}', '--$1',
+						type=str, help='${3: ${VISUAL}}',
+						default='${2:${VISUAL}}',)
+
+snippet farg
+	parser.add_argument('-${1:option name}', '--$1',
+						type=float,
+						default=${2:None},
+						help='${3: ${VISUAL}}')
+
+snippet +arg
+	parser.add_argument('${1:option name}',
+						nargs='+',
+						help='${3: Positional arguments whose type will be deduced automatically}')
+
+snippet carg
+	parser.add_argument('${1:option name}',
+						default='${2:${VISUAL}}',
+						choices=[${2:${VISUAL}}],
+						help='${3: ${VISUAL}}')
+
+
+# rosbag
+snippet rosbag
+	import rospy
+	import rosbag
+	import os
+
+	bag = rosbag.Bag(os.path.expanduser(${1:path}))
+
+	for index, (topic, msg, t) in enumerate(bag.read_messages(topics=['/${2:topic}'])):
+		print(msg)
+
+snippet debug
+	print("${1:${VISUAL}}: {}".format($1))
+
